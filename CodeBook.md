@@ -24,3 +24,6 @@ frame called "all_data".
 
 After "all_data" is created, a seperate data frame "summary_data" is created
 that contains only the mean and std columns.
+
+Finally, I use the "aggregate()" function to generate a tidy data summary
+from the summary.
