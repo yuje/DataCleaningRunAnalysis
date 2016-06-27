@@ -61,13 +61,9 @@ for (data_set in c("test", "train")) {
       assign(dataname, created)
 
       if (data_set == "test") {
-        test_vars <- c(test_vars, dataname,
-                       paste(dataname, "mean", sep="_"),
-                       paste(dataname, "mean", sep="_"))
+        test_vars <- c(test_vars, dataname)
       } else {
-        train_vars <- c(train_vars, dataname,
-                        paste(dataname, "mean", sep="_"),
-                        paste(dataname, "mean", sep="_"))
+        train_vars <- c(train_vars, dataname)
       }
     }
   }
@@ -96,10 +92,15 @@ print("All merged data stored in 'all_data'.")
 
 # 2. Extracts only the measurements on the mean and standard deviation for each
 #    measurement.
-means_stds <- grepl("std|mean", names(all_data))
+means_stds <- grepl("activity|std|mean|volunteer", names(all_data))
 summary_data <- all_data[, means_stds]
+print("Mean and std summary stored in 'summary_data'.")
 
 # 5. From the data set in step 4, creates a second, independent tidy data set
 #    with the average of each variable for each activity and each subject.
-
+tidy <- aggregate(
+    summary_data[, 1:79],
+    list(volunteer=summary_data$volunteer, activity=as.character(summary_data$activity)),
+    mean)
+print("Tidy summary stored in 'tidy'.")
 
